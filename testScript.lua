@@ -1,14 +1,14 @@
-local OrionLib = loadstring(game:HttpGet('https://raw.githubusercontent.com/jensonhirst/Orion/main/source'))()
+-- Carregar a biblioteca Fluent UI
+local FluentLib = loadstring(game:HttpGet('https://raw.githubusercontent.com/FluentUI/FluentUI/main/Source'))()
 
 -- Criando a Janela Principal
-local Window = OrionLib:MakeWindow({
-    Name = "iagocno Script - TP & Créditos", 
-    HidePremium = false, 
-    SaveConfig = true,
-    ConfigFolder = "OrionTest"
+local Window = FluentLib:CreateWindow({
+    Title = "iagocno Script - TP & Créditos",
+    Size = UDim2.new(0, 300, 0, 200),
+    Draggable = true -- Tornando a janela arrastável
 })
 
--- Função para Teleporte
+-- Função para Teleportar
 local function teleportToCheckpoints()
     local checkpoints = {}
     
@@ -33,37 +33,28 @@ local function teleportToCheckpoints()
     end
 end
 
--- Adicionando uma aba para o Teleporte
-local Tab = Window:MakeTab({
-    Name = "Teleportar",
-    Icon = "rbxassetid://4483345998", -- Ícone
-    PremiumOnly = false
-})
-
-Tab:AddButton({
-    Name = "Teleportar Checkpoints",
+-- Adicionando um Botão para Teleporte
+local TeleportButton = FluentLib:CreateButton({
+    Parent = Window,
+    Text = "Teleportar Checkpoints",
+    Position = UDim2.new(0.1, 0, 0.3, 0),
+    Size = UDim2.new(0.8, 0, 0.2, 0),
     Callback = teleportToCheckpoints
 })
 
 -- Função para Fechar o Menu
 local function closeGui()
-    OrionLib:Destroy()
+    Window:Destroy()
 end
 
--- Adicionando uma aba para Fechar
-local Tab2 = Window:MakeTab({
-    Name = "Configurações",
-    Icon = "rbxassetid://4483345998",
-    PremiumOnly = false
-})
-
-Tab2:AddButton({
-    Name = "Fechar GUI",
+-- Adicionando um Botão de Fechar
+local CloseButton = FluentLib:CreateButton({
+    Parent = Window,
+    Text = "Fechar GUI",
+    Position = UDim2.new(0.1, 0, 0.6, 0),
+    Size = UDim2.new(0.8, 0, 0.2, 0),
     Callback = closeGui
 })
 
--- Tornando a janela arrastável
-Window:MakeDraggable(true)
-
--- Exibindo o Menu
-OrionLib:Init()
+-- Inicializando a Biblioteca
+FluentLib:Init()
