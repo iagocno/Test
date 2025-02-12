@@ -43,28 +43,19 @@ DestroyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 -- Função para teleportar
 TeleportButton.MouseButton1Click:Connect(function()
     local checkpoints = {
-        game:GetService("Workspace").EventPartFolder:FindFirstChild("1.Center"),
-        game:GetService("Workspace").EventPartFolder:FindFirstChild("2.Center"),
-        game:GetService("Workspace").EventPartFolder:FindFirstChild("3.Center"),
-        game:GetService("Workspace").EventPartFolder:FindFirstChild("4.Center"),
-        game:GetService("Workspace").EventPartFolder:FindFirstChild("5.Center"),
-        game:GetService("Workspace").EventPartFolder:FindFirstChild("6.Center"),
-        game:GetService("Workspace").EventPartFolder:FindFirstChild("7.Center"),
-        game:GetService("Workspace").EventPartFolder:FindFirstChild("8.Center")
+        game:GetService("Workspace").EventPartFolder:FindFirstChild("1").Checkpoint,
+        game:GetService("Workspace").EventPartFolder:FindFirstChild("2").Checkpoint,
+        game:GetService("Workspace").EventPartFolder:FindFirstChild("3").Checkpoint,
+        game:GetService("Workspace").EventPartFolder:FindFirstChild("4").Checkpoint,
+        game:GetService("Workspace").EventPartFolder:FindFirstChild("5").Checkpoint
     }
     
     local player = game.Players.LocalPlayer
-    if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-        for _, checkpoint in ipairs(checkpoints) do
-            if checkpoint then
-                player.Character.HumanoidRootPart.CFrame = checkpoint.CFrame
-                wait(1) -- Pequeno delay entre teleportes
-            else
-                print("Checkpoint não encontrado.")
-            end
+    for _, checkpoint in ipairs(checkpoints) do
+        if checkpoint then
+            player.Character:SetPrimaryPartCFrame(checkpoint.CFrame)
+            wait(1) -- Pequeno delay entre teleportes
         end
-    else
-        print("Jogador ou HumanoidRootPart não encontrado.")
     end
 end)
 
