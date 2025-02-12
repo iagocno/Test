@@ -1,4 +1,4 @@
--- Criando a GUIf
+-- Criando a GUI
 local ScreenGui = Instance.new("ScreenGui")
 local Frame = Instance.new("Frame")
 local Title = Instance.new("TextLabel")
@@ -43,14 +43,14 @@ DestroyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 -- Função para teleportar
 TeleportButton.MouseButton1Click:Connect(function()
     local checkpoints = {
-        game:GetService("Workspace").EventPartFolder:FindFirstChild("1.Center"),
-        game:GetService("Workspace").EventPartFolder:FindFirstChild("2.Center"),
-        game:GetService("Workspace").EventPartFolder:FindFirstChild("3.Center"),
-        game:GetService("Workspace").EventPartFolder:FindFirstChild("4.Center"),
-        game:GetService("Workspace").EventPartFolder:FindFirstChild("5.Center"),
-        game:GetService("Workspace").EventPartFolder:FindFirstChild("6.Center"),
-        game:GetService("Workspace").EventPartFolder:FindFirstChild("7.Center"),
-        game:GetService("Workspace").EventPartFolder:FindFirstChild("8.Center")
+        game:GetService("Workspace").EventPartFolder:FindFirstChild("1"),
+        game:GetService("Workspace").EventPartFolder:FindFirstChild("2"),
+        game:GetService("Workspace").EventPartFolder:FindFirstChild("3"),
+        game:GetService("Workspace").EventPartFolder:FindFirstChild("4"),
+        game:GetService("Workspace").EventPartFolder:FindFirstChild("5"),
+        game:GetService("Workspace").EventPartFolder:FindFirstChild("6"),
+        game:GetService("Workspace").EventPartFolder:FindFirstChild("7"),
+        game:GetService("Workspace").EventPartFolder:FindFirstChild("8")
     }
     
     local player = game.Players.LocalPlayer
