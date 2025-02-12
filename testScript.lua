@@ -1,4 +1,4 @@
-local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/jensonhirst/Orion/main/source')))()
+local OrionLib = loadstring(game:HttpGet('https://raw.githubusercontent.com/jensonhirst/Orion/main/source'))()
 
 -- Criando a Janela Principal
 local Window = OrionLib:MakeWindow({
@@ -61,11 +61,6 @@ Tab2:AddButton({
     Name = "Fechar GUI",
     Callback = closeGui
 })
-
--- Permitir que o usuário mova a janela (arraste)
-local dragging = false
-local dragStartPos = nil
-local dragStartFramePos = nil
 
 -- Tornando a janela arrastável
 Window:MakeDraggable(true)
