@@ -62,5 +62,5 @@ Tab2:AddButton({
     Callback = closeGui
 })
 
--- Exibindo o Menu
+-- Exibindo o Menuu
 OrionLib:Init()
