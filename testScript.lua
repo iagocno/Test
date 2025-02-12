@@ -31,7 +31,7 @@ local function teleportToCheckpoints()
             wait(10) -- Intervalo de 10 segundos entre os teleportes
         end
     end
-end 
+end
 
 -- Adicionando uma aba para o Teleporte
 local Tab = Window:MakeTab({
@@ -61,6 +61,14 @@ Tab2:AddButton({
     Name = "Fechar GUI",
     Callback = closeGui
 })
+
+-- Permitir que o usuário mova a janela (arraste)
+local dragging = false
+local dragStartPos = nil
+local dragStartFramePos = nil
+
+-- Tornando a janela arrastável
+Window:MakeDraggable(true)
 
 -- Exibindo o Menu
 OrionLib:Init()
