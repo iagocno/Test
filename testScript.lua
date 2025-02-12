@@ -11,23 +11,30 @@ ScreenGui.Parent = game:GetService("CoreGui")
 
 -- Configurando a Janela
 Frame.Parent = ScreenGui
-Frame.Size = UDim2.new(0, 250, 0, 150)
-Frame.Position = UDim2.new(0.5, -125, 0.5, -75)
+Frame.Size = UDim2.new(0, 250, 0, 150) -- Tamanho inicial da GUI
+Frame.Position = UDim2.new(0.5, -125, 0.5, -75) -- Centraliza a GUI
 Frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 Frame.BorderSizePixel = 2
-Frame.Draggable = true  -- Permite que a janela seja arrastada
+Frame.Active = true -- Para permitir interação
+
+-- Adicionando um Frame para o movimento (para arrastar a GUI)
+local draggerFrame = Instance.new("Frame")
+draggerFrame.Parent = Frame
+draggerFrame.Size = UDim2.new(1, 0, 0.2, 0) -- A parte superior do frame será a área para arrastar
+draggerFrame.BackgroundTransparency = 1
+draggerFrame.BorderSizePixel = 0
 
 -- Título
-Title.Parent = Frame
-Title.Size = UDim2.new(0.8, 0, 0.2, 0)
+Title.Parent = draggerFrame
+Title.Size = UDim2.new(0.8, 0, 1, 0)
 Title.Text = "iagocno Script - TP & Créditos"
 Title.TextSize = 15
 Title.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 Title.TextColor3 = Color3.fromRGB(255, 255, 255)
 
 -- Seta de Minimizar/Expandir
-ArrowIcon.Parent = Frame
-ArrowIcon.Size = UDim2.new(0.2, 0, 0.2, 0)
+ArrowIcon.Parent = draggerFrame
+ArrowIcon.Size = UDim2.new(0.2, 0, 1, 0)
 ArrowIcon.Position = UDim2.new(0.8, 0, 0, 0)
 ArrowIcon.Text = "▼"  -- Inicialmente para baixo
 ArrowIcon.TextSize = 18
@@ -95,9 +102,35 @@ local function toggleMenu()
     end
 end
 
+-- Função para movimentar a GUI (arrastar)
+local dragging = false
+local dragStartPos = nil
+local dragStartFramePos = nil
+
+draggerFrame.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = true
+        dragStartPos = input.Position
+        dragStartFramePos = Frame.Position
+    end
+end)
+
+draggerFrame.InputChanged:Connect(function(input)
+    if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+        local delta = input.Position - dragStartPos
+        Frame.Position = dragStartFramePos + UDim2.new(0, delta.X, 0, delta.Y)
+    end
+end)
+
+draggerFrame.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = false
+    end
+end)
+
 -- Conectando as funções aos botões
 TeleportButton.MouseButton1Click:Connect(teleportToCheckpoints)
 DestroyButton.MouseButton1Click:Connect(closeGui)
 ArrowIcon.MouseButton1Click:Connect(toggleMenu)
 
-print("GUI carregada com sucesso!")
+print("GUI carregada com sucesso!!")
