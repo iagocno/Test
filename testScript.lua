@@ -1,26 +1,34 @@
--- Carregar a biblioteca Fluent UI
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
--- Criar a Janela
 local Window = Fluent:CreateWindow({
-    Title = "Teleport & Control",  -- Título da janela
-    Size = UDim2.fromOffset(350, 250),  -- Tamanho ajustado para dispositivos móveis
+    Title = "Fluent " .. Fluent.Version,
+    SubTitle = "by dawid",
+    TabWidth = 160,
+    Size = UDim2.fromOffset(580, 460),
+    Acrylic = true,  -- Adicionando efeito de acrílico
     Theme = "Dark",
-    Draggable = true  -- Permite que a janela seja movida
+    MinimizeKey = Enum.KeyCode.LeftControl -- Tecla de minimizar
 })
 
--- Adicionar Aba Principal
-local MainTab = Window:AddTab({ Title = "Main" })
+-- Criação das abas
+local Tabs = {
+    Main = Window:AddTab({ Title = "Main", Icon = "" }),
+    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+}
 
--- Função para Teleportar para Checkpoints
+local Options = Fluent.Options
+
+-- Função para teleportar para os checkpoints
 local function teleportToCheckpoints()
     local checkpoints = {}
     
-    -- Coletar checkpoints de 1 a 8
+    -- Procurar os checkpoints numerados de 1 a 8
     local eventFolder = game:GetService("Workspace"):FindFirstChild("EventPartFolder")
     if eventFolder then
         for i = 1, 8 do
-            local checkpoint = eventFolder:FindFirstChild(tostring(i)) -- Checkpoint "1", "2", ..., "8"
+            local checkpoint = eventFolder:FindFirstChild(tostring(i))  -- Checkpoints "1", "2", ..., "8"
             if checkpoint and checkpoint:FindFirstChild("Checkpoint") then
                 table.insert(checkpoints, checkpoint.Checkpoint)
             end
@@ -32,46 +40,51 @@ local function teleportToCheckpoints()
     for _, checkpoint in ipairs(checkpoints) do
         if checkpoint then
             player.Character:SetPrimaryPartCFrame(checkpoint.CFrame)
-            wait(10) -- Intervalo de 10 segundos entre os teleportes
+            wait(10)  -- Intervalo de 10 segundos
         end
     end
 end
 
--- Adicionar o Botão de Teleporte
-MainTab:AddButton({
+-- Adicionando botão de Teleportar para os checkpoints
+Tabs.Main:AddButton({
     Title = "Teleportar Checkpoints",  -- Título do botão
-    Callback = teleportToCheckpoints  -- Função chamada quando o botão for pressionado
+    Callback = teleportToCheckpoints  -- Função de teleporte
 })
 
--- Função para Fechar a GUI
-local function closeGui()
-    Window:Destroy()
-end
-
--- Adicionar o Botão para Fechar a GUI
-MainTab:AddButton({
-    Title = "Fechar GUI",  -- Título do botão
-    Callback = closeGui  -- Função chamada quando o botão for pressionado
-})
-
--- Criar um controle para recolher a janela
+-- Função para esconder ou mostrar a janela
 local function toggleWindow()
     if Window.Visible then
         Window:Hide()  -- Esconde a janela
     else
-        Window:Show()  -- Exibe a janela
+        Window:Show()  -- Mostra a janela
     end
 end
 
--- Adicionar o botão para recolher a janela
-MainTab:AddButton({
+-- Botão para recolher/mostrar a janela
+Tabs.Main:AddButton({
     Title = "Recolher/Mostrar GUI",  -- Título do botão
-    Callback = toggleWindow  -- Função chamada quando o botão for pressionado
+    Callback = toggleWindow  -- Função de alternar a visibilidade
 })
 
--- Mostrar Notificação de Sucesso
+-- Notificação de carregamento
 Fluent:Notify({
-    Title = "Fluent UI",
-    Content = "Script carregado com sucesso!",
+    Title = "Fluent",
+    Content = "O script foi carregado com sucesso!",
     Duration = 5  -- Duração da notificação
 })
+
+-- Função de configurar o SaveManager e InterfaceManager
+SaveManager:SetLibrary(Fluent)
+InterfaceManager:SetLibrary(Fluent)
+SaveManager:SetIgnoreIndexes({})
+InterfaceManager:SetFolder("FluentScriptHub")
+SaveManager:SetFolder("FluentScriptHub/specific-game")
+
+-- Adicionando a seção de configurações no Settings Tab
+InterfaceManager:BuildInterfaceSection(Tabs.Settings)
+SaveManager:BuildConfigSection(Tabs.Settings)
+
+Window:SelectTab(1)
+
+-- Carregar configuração salva automaticamente
+SaveManager:LoadAutoloadConfig()
