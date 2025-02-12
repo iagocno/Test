@@ -1,49 +1,77 @@
-local button = script.Parent -- O botão que o jogador clicará
-local hubScreen = nil -- A tela do hub que será criada posteriormente
+-- Criando a GUI
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local Title = Instance.new("TextLabel")
+local TeleportButton = Instance.new("TextButton")
+local DestroyButton = Instance.new("TextButton")
 
-button.MouseButton1Click:Connect(function()
-    -- Verificar se o Hub já está aberto
-    if hubScreen == nil then
-        -- Criar a tela do hub
-        hubScreen = Instance.new("ScreenGui")
-        hubScreen.Name = "ScriptHub"
-        hubScreen.Parent = game.Players.LocalPlayer.PlayerGui
-        
-        -- Adicionar um fundo simples para o hub
-        local background = Instance.new("Frame")
-        background.Size = UDim2.new(0.5, 0, 0.5, 0)
-        background.Position = UDim2.new(0.25, 0, 0.25, 0)
-        background.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-        background.BackgroundTransparency = 0.5
-        background.Parent = hubScreen
-        
-        -- Adicionar um título ao Hub
-        local title = Instance.new("TextLabel")
-        title.Text = "Script Hub"
-        title.Size = UDim2.new(1, 0, 0.1, 0)
-        title.Position = UDim2.new(0, 0, 0, 0)
-        title.TextColor3 = Color3.fromRGB(255, 255, 255)
-        title.BackgroundTransparency = 1
-        title.Parent = background
-        
-        -- Adicionar um botão para um script, por exemplo
-        local scriptButton = Instance.new("TextButton")
-        scriptButton.Text = "Executar Script 1"
-        scriptButton.Size = UDim2.new(0.8, 0, 0.1, 0)
-        scriptButton.Position = UDim2.new(0.1, 0, 0.2, 0)
-        scriptButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-        scriptButton.Parent = background
-        
-        scriptButton.MouseButton1Click:Connect(function()
-            -- Adicione o script que você deseja executar aqui
-            print("Script 1 executado!")
-            -- Coloque o código do script que você quer rodar aqui
-        end)
-        
-        -- Adicionar mais botões de scripts, conforme necessário
-    else
-        -- Fechar o hub se ele já estiver aberto
-        hubScreen:Destroy()
-        hubScreen = nil
+ScreenGui.Parent = game:GetService("CoreGui")
+
+-- Configurando a Janela
+Frame.Parent = ScreenGui
+Frame.Size = UDim2.new(0, 250, 0, 150)
+Frame.Position = UDim2.new(0.5, -125, 0.5, -75)
+Frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+Frame.BorderSizePixel = 2
+
+-- Título
+Title.Parent = Frame
+Title.Size = UDim2.new(1, 0, 0.2, 0)
+Title.Text = "iagocno Script - TP & Créditos"
+Title.TextSize = 15
+Title.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+-- Botão de Teleporte
+TeleportButton.Parent = Frame
+TeleportButton.Size = UDim2.new(0.8, 0, 0.3, 0)
+TeleportButton.Position = UDim2.new(0.1, 0, 0.3, 0)
+TeleportButton.Text = "Teleportar Checkpoints"
+TeleportButton.TextSize = 14
+TeleportButton.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+TeleportButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+-- Botão para Fechar
+DestroyButton.Parent = Frame
+DestroyButton.Size = UDim2.new(0.8, 0, 0.3, 0)
+DestroyButton.Position = UDim2.new(0.1, 0, 0.7, 0)
+DestroyButton.Text = "Fechar Script"
+DestroyButton.TextSize = 14
+DestroyButton.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+DestroyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+-- Função para teleportar
+local function teleportToCheckpoints()
+    local checkpoints = {}
+    
+    -- Coletando todos os checkpoints na pasta EventPartFolder
+    local eventFolder = game:GetService("Workspace"):FindFirstChild("EventPartFolder")
+    if eventFolder then
+        for i = 1, 5 do
+            local checkpoint = eventFolder:FindFirstChild(tostring(i)) -- Checkpoint "1", "2", "3", etc.
+            if checkpoint and checkpoint:FindFirstChild("Checkpoint") then
+                table.insert(checkpoints, checkpoint.Checkpoint)
+            end
+        end
     end
-end)
+    
+    -- Teleportando o jogador para cada checkpoint
+    local player = game.Players.LocalPlayer
+    for _, checkpoint in ipairs(checkpoints) do
+        if checkpoint then
+            player.Character:SetPrimaryPartCFrame(checkpoint.CFrame)
+            wait(1) -- Pequeno delay entre teleportes
+        end
+    end
+end
+
+-- Função para fechar a GUI
+local function closeGui()
+    ScreenGui:Destroy()
+end
+
+-- Conectando as funções aos botões
+TeleportButton.MouseButton1Click:Connect(teleportToCheckpoints)
+DestroyButton.MouseButton1Click:Connect(closeGui)
+
+print("GUI carregada com sucesso!")
