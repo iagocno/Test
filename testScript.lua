@@ -1,29 +1,33 @@
 -- Carregar a biblioteca Fluent UI
-local FluentLib = loadstring(game:HttpGet('https://raw.githubusercontent.com/FluentUI/FluentUI/main/Source'))()
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 
--- Criando a Janela Principal
-local Window = FluentLib:CreateWindow({
-    Title = "iagocno Script - TP & Créditos",
-    Size = UDim2.new(0, 300, 0, 200),
-    Draggable = true -- Tornando a janela arrastável
+-- Criar a Janela
+local Window = Fluent:CreateWindow({
+    Title = "Teleport Script",
+    Size = UDim2.fromOffset(300, 200),
+    Theme = "Dark",
+    Draggable = true  -- Tornar a janela arrastável
 })
 
--- Função para Teleportar
+-- Adicionar aba Principal
+local MainTab = Window:AddTab({ Title = "Main" })
+
+-- Função de Teleporte para Checkpoints
 local function teleportToCheckpoints()
     local checkpoints = {}
     
-    -- Coletando todos os checkpoints na pasta EventPartFolder (Agora de 1 a 8)
+    -- Coletar checkpoints de 1 a 8
     local eventFolder = game:GetService("Workspace"):FindFirstChild("EventPartFolder")
     if eventFolder then
         for i = 1, 8 do
-            local checkpoint = eventFolder:FindFirstChild(tostring(i)) -- Checkpoint "1", "2", "3", ..., "8"
+            local checkpoint = eventFolder:FindFirstChild(tostring(i)) -- Checkpoint "1", "2", ..., "8"
             if checkpoint and checkpoint:FindFirstChild("Checkpoint") then
                 table.insert(checkpoints, checkpoint.Checkpoint)
             end
         end
     end
     
-    -- Teleportando o jogador para cada checkpoint
+    -- Teleportar para cada checkpoint
     local player = game.Players.LocalPlayer
     for _, checkpoint in ipairs(checkpoints) do
         if checkpoint then
@@ -33,28 +37,26 @@ local function teleportToCheckpoints()
     end
 end
 
--- Adicionando um Botão para Teleporte
-local TeleportButton = FluentLib:CreateButton({
-    Parent = Window,
-    Text = "Teleportar Checkpoints",
-    Position = UDim2.new(0.1, 0, 0.3, 0),
-    Size = UDim2.new(0.8, 0, 0.2, 0),
+-- Adicionar um botão para teleportar
+MainTab:AddButton({
+    Title = "Teleportar Checkpoints",
     Callback = teleportToCheckpoints
 })
 
--- Função para Fechar o Menu
+-- Função para fechar o GUI
 local function closeGui()
     Window:Destroy()
 end
 
--- Adicionando um Botão de Fechar
-local CloseButton = FluentLib:CreateButton({
-    Parent = Window,
-    Text = "Fechar GUI",
-    Position = UDim2.new(0.1, 0, 0.6, 0),
-    Size = UDim2.new(0.8, 0, 0.2, 0),
+-- Adicionar um botão para fechar a GUI
+MainTab:AddButton({
+    Title = "Fechar GUI",
     Callback = closeGui
 })
 
--- Inicializando a Biblioteca
-FluentLib:Init()
+-- Mostrar Notificação de Sucesso
+Fluent:Notify({
+    Title = "Fluent UI",
+    Content = "Script carregado com sucesso!",
+    Duration = 5
+})
