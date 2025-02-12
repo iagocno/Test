@@ -1,4 +1,4 @@
--- Criando a GUI
+-- Criando a GUIf
 local ScreenGui = Instance.new("ScreenGui")
 local Frame = Instance.new("Frame")
 local Title = Instance.new("TextLabel")
