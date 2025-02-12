@@ -31,7 +31,7 @@ local function teleportToCheckpoints()
             wait(10) -- Intervalo de 10 segundos entre os teleportes
         end
     end
-end
+end 
 
 -- Adicionando uma aba para o Teleporte
 local Tab = Window:MakeTab({
@@ -62,5 +62,5 @@ Tab2:AddButton({
     Callback = closeGui
 })
 
--- Exibindo o Menuu
+-- Exibindo o Menu
 OrionLib:Init()
