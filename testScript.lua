@@ -43,11 +43,15 @@ DestroyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 -- Função para teleportar
 TeleportButton.MouseButton1Click:Connect(function()
     local checkpoints = {
+        game:GetService("Workspace").EventPartFolder:FindFirstChild("0").Checkpoint,
         game:GetService("Workspace").EventPartFolder:FindFirstChild("1").Checkpoint,
         game:GetService("Workspace").EventPartFolder:FindFirstChild("2").Checkpoint,
         game:GetService("Workspace").EventPartFolder:FindFirstChild("3").Checkpoint,
         game:GetService("Workspace").EventPartFolder:FindFirstChild("4").Checkpoint,
-        game:GetService("Workspace").EventPartFolder:FindFirstChild("5").Checkpoint
+        game:GetService("Workspace").EventPartFolder:FindFirstChild("5").Checkpoint,
+        game:GetService("Workspace").EventPartFolder:FindFirstChild("6").Checkpoint,
+        game:GetService("Workspace").EventPartFolder:FindFirstChild("7").Checkpoint,
+        game:GetService("Workspace").EventPartFolder:FindFirstChild("8").Checkpoint
     }
     
     local player = game.Players.LocalPlayer
