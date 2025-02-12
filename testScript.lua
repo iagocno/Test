@@ -1,67 +1,138 @@
--- Criando a GUI
-local ScreenGui = Instance.new("ScreenGui")
-local Frame = Instance.new("Frame")
-local Title = Instance.new("TextLabel")
-local TeleportButton = Instance.new("TextButton")
-local DestroyButton = Instance.new("TextButton")
+-- Lấy Player hiện tại
+local player = game:GetService("Players").LocalPlayer or game:GetService("Players"):GetPlayers()[1]
+if not player then
+    error("Không tìm thấy Player! Đảm bảo bạn đang chạy script trong Play Mode.")
+end
 
-ScreenGui.Parent = game:GetService("CoreGui")
+-- Lấy PlayerGui
+local playerGui = player:FindFirstChild("PlayerGui")
+if not playerGui then
+    error("Không tìm thấy PlayerGui! Hãy đảm bảo bạn đang ở chế độ Play Test.")
+end
 
--- Configurando a Janela
-Frame.Parent = ScreenGui
-Frame.Size = UDim2.new(0, 250, 0, 150)
-Frame.Position = UDim2.new(0.5, -125, 0.5, -75)
-Frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-Frame.BorderSizePixel = 2
+-- Tạo ScreenGui
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "MessageGui"
+screenGui.Parent = playerGui
 
--- Título
-Title.Parent = Frame
-Title.Size = UDim2.new(1, 0, 0.2, 0)
-Title.Text = "Meu Script - TP & Créditos"
-Title.TextSize = 15
-Title.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+-- Tạo TextLabel
+local textLabel = Instance.new("TextLabel")
+textLabel.Name = "MessageLabel"
+textLabel.Parent = screenGui
+textLabel.Size = UDim2.new(1, 0, 0.1, 0) -- Ngang toàn màn hình, cao 10% chiều cao màn hình
+textLabel.Position = UDim2.new(0, 0, 0.45, 0) -- Giữa màn hình
+textLabel.BackgroundTransparency = 1
+textLabel.TextTransparency = 1
+textLabel.Font = Enum.Font.Arcade -- Phông chữ đẹp
+textLabel.TextSize = 60 -- Kích thước chữ lớn
+textLabel.TextStrokeTransparency = 0 -- Viền chữ rõ
+textLabel.TextStrokeColor3 = Color3.new(0, 0, 0) -- Viền chữ màu đen
+textLabel.Text = "Made by zam2109 Roblox"
 
--- Botão de Teleporte
-TeleportButton.Parent = Frame
-TeleportButton.Size = UDim2.new(0.8, 0, 0.3, 0)
-TeleportButton.Position = UDim2.new(0.1, 0, 0.3, 0)
-TeleportButton.Text = "Teleportar Checkpoints"
-TeleportButton.TextSize = 14
-TeleportButton.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
-TeleportButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+-- Hiệu ứng xuất hiện (fade-in)
+for i = 1, 0, -0.1 do
+    textLabel.TextTransparency = i
+    textLabel.TextStrokeTransparency = i
+    wait(0.1)
+end
 
--- Botão para Fechar
-DestroyButton.Parent = Frame
-DestroyButton.Size = UDim2.new(0.8, 0, 0.3, 0)
-DestroyButton.Position = UDim2.new(0.1, 0, 0.7, 0)
-DestroyButton.Text = "Fechar Script"
-DestroyButton.TextSize = 14
-DestroyButton.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
-DestroyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+-- Tạo hiệu ứng bảy sắc cầu vồng
+local rainbowColors = {
+    Color3.fromRGB(255, 0, 0), -- Đỏ
+    Color3.fromRGB(255, 127, 0), -- Cam
+    Color3.fromRGB(255, 255, 0), -- Vàng
+    Color3.fromRGB(0, 255, 0), -- Lục
+    Color3.fromRGB(0, 255, 255), -- Lam nhạt
+    Color3.fromRGB(0, 0, 255), -- Lam
+    Color3.fromRGB(139, 0, 255) -- Tím
+}
 
--- Função para teleportar
-TeleportButton.MouseButton1Click:Connect(function()
-    local checkpoints = {
-        game:GetService("Workspace").EventPartFolder:FindFirstChild("1").Checkpoint,
-        game:GetService("Workspace").EventPartFolder:FindFirstChild("2").Checkpoint,
-        game:GetService("Workspace").EventPartFolder:FindFirstChild("3").Checkpoint,
-        game:GetService("Workspace").EventPartFolder:FindFirstChild("4").Checkpoint,
-        game:GetService("Workspace").EventPartFolder:FindFirstChild("5").Checkpoint
-    }
-    
-    local player = game.Players.LocalPlayer
-    for _, checkpoint in ipairs(checkpoints) do
-        if checkpoint then
-            player.Character:SetPrimaryPartCFrame(checkpoint.CFrame)
-            wait(1) -- Pequeno delay entre teleportes
-        end
+-- Thay đổi màu liên tục trong 3 giây
+local startTime = tick()
+while tick() - startTime < 3 do
+    for _, color in ipairs(rainbowColors) do
+        textLabel.TextColor3 = color
+        wait(0.1) -- Chuyển màu nhanh
     end
-end)
+end
 
--- Função para fechar a GUI
-DestroyButton.MouseButton1Click:Connect(function()
-    ScreenGui:Destroy()
-end)
+-- Hiệu ứng biến mất (fade-out)
+for i = 0, 1, 0.1 do
+    textLabel.TextTransparency = i
+    textLabel.TextStrokeTransparency = i
+    wait(0.1)
+end
 
-print("GUI carregada com sucesso!")
+-- Xóa ScreenGui
+screenGui:Destroy()
+wait(0.1)
+local ToDisable = {
+	Textures = true,
+	VisualEffects = true,
+	Parts = true,
+	Particles = true,
+	Sky = true
+}
+
+local ToEnable = {
+	FullBright = true
+}
+
+local Stuff = {}
+
+for _, v in next, game:GetDescendants() do
+	if ToDisable.Parts then
+		if v:IsA("Part") or v:IsA("Union") or v:IsA("BasePart") then
+			v.Material = Enum.Material.SmoothPlastic
+			table.insert(Stuff, 1, v)
+		end
+	end
+	
+	if ToDisable.Particles then
+		if v:IsA("ParticleEmitter") or v:IsA("Smoke") or v:IsA("Explosion") or v:IsA("Sparkles") or v:IsA("Fire") then
+			v.Enabled = false
+			table.insert(Stuff, 1, v)
+		end
+	end
+	
+	if ToDisable.VisualEffects then
+		if v:IsA("BloomEffect") or v:IsA("BlurEffect") or v:IsA("DepthOfFieldEffect") or v:IsA("SunRaysEffect") then
+			v.Enabled = false
+			table.insert(Stuff, 1, v)
+		end
+	end
+	
+	if ToDisable.Textures then
+		if v:IsA("Decal") or v:IsA("Texture") then
+			v.Texture = ""
+			table.insert(Stuff, 1, v)
+		end
+	end
+	
+	if ToDisable.Sky then
+		if v:IsA("Sky") then
+			v.Parent = nil
+			table.insert(Stuff, 1, v)
+		end
+	end
+end
+
+game:GetService("TestService"):Message("Effects Disabler Script : Successfully disabled "..#Stuff.." assets / effects. Settings :")
+
+for i, v in next, ToDisable do
+	print(tostring(i)..": "..tostring(v))
+end
+
+if ToEnable.FullBright then
+    local Lighting = game:GetService("Lighting")
+    
+    Lighting.FogColor = Color3.fromRGB(255, 255, 255)
+    Lighting.FogEnd = math.huge
+    Lighting.FogStart = math.huge
+    Lighting.Ambient = Color3.fromRGB(255, 255, 255)
+    Lighting.Brightness = 5
+    Lighting.ColorShift_Bottom = Color3.fromRGB(255, 255, 255)
+    Lighting.ColorShift_Top = Color3.fromRGB(255, 255, 255)
+    Lighting.OutdoorAmbient = Color3.fromRGB(255, 255, 255)
+    Lighting.Outlines = true
+end
