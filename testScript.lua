@@ -1,110 +1,76 @@
-local Notification = require(game:GetService("ReplicatedStorage").Notification)
-Notification.new("<Color=Cyan>zam2109 HUB <Color=/>"):Display()
-wait(0.5)
-Notification.new("<Color=Yellow>zam2109 is King 👑<Color=/>"):Display()
-require(game.ReplicatedStorage:WaitForChild("Notification")).new(" <Color=Red>Shop zam2109 Roblox: https://urlvn.net/zvuq63y<Color=/> "):Display()
-require(game.ReplicatedStorage:WaitForChild("Notification")).new(" <Color=Green>Welcome to zam2109 Roblox Community<Color=/> "):Display()
-require(game.ReplicatedStorage:WaitForChild("Notification")).new(" <Color=Yellow>https://discord.gg/3f6SUbGneC<Color=/> "):Display()
+-- Criando a GUI
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local Title = Instance.new("TextLabel")
+local TeleportButton = Instance.new("TextButton")
+local DestroyButton = Instance.new("TextButton")
 
--- Phát nhạc khi mã chạy (ID nhạc khi chạy mã là 83142874256382)
-local joinSound = Instance.new("Sound")
-joinSound.Name = "JoinSound"
-joinSound.SoundId = "rbxassetid://18315905210" -- ID nhạc khi chạy mã
-joinSound.Volume = 3
-joinSound.Looped = true
-joinSound.Parent = workspace
-joinSound:Play()
+ScreenGui.Parent = game:GetService("CoreGui")
 
-game.StarterGui:SetCore(
-    "SendNotification",
-    {
-        Title = "YTB : zam2109 Roblox",
-        Text = "Like sub đi mấy Fen",
-        Duration = 100000
-    })
-wait(0.1)
-local MaxSpeed = 200 -- Studs per second 380 no flag but kick
+-- Configurando a Janela
+Frame.Parent = ScreenGui
+Frame.Size = UDim2.new(0, 250, 0, 150)
+Frame.Position = UDim2.new(0.5, -125, 0.5, -75)
+Frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+Frame.BorderSizePixel = 2
 
-local LocalPlayer = game:GetService("Players").LocalPlayer
-local Locations = workspace._WorldOrigin.Locations
+-- Título
+Title.Parent = Frame
+Title.Size = UDim2.new(1, 0, 0.2, 0)
+Title.Text = "Meu Script - TP & Créditos"
+Title.TextSize = 15
+Title.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
 
-local function getCharacter()
-    if not LocalPlayer.Character then
-        LocalPlayer.CharacterAdded:Wait()
-    end
-    LocalPlayer.Character:WaitForChild("HumanoidRootPart")
-    return LocalPlayer.Character
-end
+-- Botão de Teleporte
+TeleportButton.Parent = Frame
+TeleportButton.Size = UDim2.new(0.8, 0, 0.3, 0)
+TeleportButton.Position = UDim2.new(0.1, 0, 0.3, 0)
+TeleportButton.Text = "Teleportar Checkpoints"
+TeleportButton.TextSize = 14
+TeleportButton.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+TeleportButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 
-local function DistanceFromPlrSort(ObjectList: table)
-    local RootPart = getCharacter().LowerTorso
-    table.sort(ObjectList, function(ChestA, ChestB)
-        local RootPos = RootPart.Position
-        local DistanceA = (RootPos - ChestA.Position).Magnitude
-        local DistanceB = (RootPos - ChestB.Position).Magnitude
-        return DistanceA < DistanceB
-    end)
-end
+-- Botão para Fechar
+DestroyButton.Parent = Frame
+DestroyButton.Size = UDim2.new(0.8, 0, 0.3, 0)
+DestroyButton.Position = UDim2.new(0.1, 0, 0.7, 0)
+DestroyButton.Text = "Fechar Script"
+DestroyButton.TextSize = 14
+DestroyButton.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+DestroyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 
-local UncheckedChests = {}
-local FirstRun = true
-
-local function getChestsSorted()
-    if FirstRun then
-        FirstRun = false
-        local Objects = game:GetDescendants()
-        for i, Object in pairs(Objects) do
-            if Object.Name:find("Chest") and Object.ClassName == "Part" then
-                table.insert(UncheckedChests, Object)
+-- Função para teleportar
+TeleportButton.MouseButton1Click:Connect(function()
+    local checkpoints = {
+        game:GetService("Workspace").EventPartFolder:FindFirstChild("1.Center"),
+        game:GetService("Workspace").EventPartFolder:FindFirstChild("2.Center"),
+        game:GetService("Workspace").EventPartFolder:FindFirstChild("3.Center"),
+        game:GetService("Workspace").EventPartFolder:FindFirstChild("4.Center"),
+        game:GetService("Workspace").EventPartFolder:FindFirstChild("5.Center"),
+        game:GetService("Workspace").EventPartFolder:FindFirstChild("6.Center"),
+        game:GetService("Workspace").EventPartFolder:FindFirstChild("7.Center"),
+        game:GetService("Workspace").EventPartFolder:FindFirstChild("8.Center")
+    }
+    
+    local player = game.Players.LocalPlayer
+    if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+        for _, checkpoint in ipairs(checkpoints) do
+            if checkpoint then
+                player.Character.HumanoidRootPart.CFrame = checkpoint.CFrame
+                wait(1) -- Pequeno delay entre teleportes
+            else
+                print("Checkpoint não encontrado.")
             end
         end
+    else
+        print("Jogador ou HumanoidRootPart não encontrado.")
     end
-    local Chests = {}
-    for i, Chest in pairs(UncheckedChests) do
-        if Chest:FindFirstChild("TouchInterest") then
-            table.insert(Chests, Chest)
-        end
-    end
-    DistanceFromPlrSort(Chests)
-    return Chests
-end
+end)
 
-local function toggleNoclip(Toggle: boolean)
-    for i,v in pairs(getCharacter():GetChildren()) do
-        if v.ClassName == "Part" then
-            v.CanCollide = not Toggle
-        end
-    end
-end
+-- Função para fechar a GUI
+DestroyButton.MouseButton1Click:Connect(function()
+    ScreenGui:Destroy()
+end)
 
-local function Teleport(Goal: CFrame, Speed)
-    if not Speed then
-        Speed = MaxSpeed
-    end
-    toggleNoclip(true)
-    local RootPart = getCharacter().HumanoidRootPart
-    local Magnitude = (RootPart.Position - Goal.Position).Magnitude
-
-    RootPart.CFrame = RootPart.CFrame
-    
-    while not (Magnitude < 1) do
-        local Direction = (Goal.Position - RootPart.Position).unit
-        RootPart.CFrame = RootPart.CFrame + Direction * (Speed * wait())
-        Magnitude = (RootPart.Position - Goal.Position).Magnitude
-    end
-    toggleNoclip(false)
-end
-
-local function main()
-    while wait() do
-        local Chests = getChestsSorted()
-        if #Chests > 0 then
-            Teleport(Chests[1].CFrame)
-        else
-            -- You can put serverhop here
-        end
-    end
-end
-
-wait = task.wait
-main()
+print("GUI carregada com sucesso!")
