@@ -2,8 +2,10 @@
 local ScreenGui = Instance.new("ScreenGui")
 local Frame = Instance.new("Frame")
 local Title = Instance.new("TextLabel")
+local MinimizeButton = Instance.new("TextButton")
 local TeleportButton = Instance.new("TextButton")
 local DestroyButton = Instance.new("TextButton")
+local ArrowIcon = Instance.new("TextLabel") -- A seta para expandir/recolher
 
 ScreenGui.Parent = game:GetService("CoreGui")
 
@@ -13,14 +15,24 @@ Frame.Size = UDim2.new(0, 250, 0, 150)
 Frame.Position = UDim2.new(0.5, -125, 0.5, -75)
 Frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 Frame.BorderSizePixel = 2
+Frame.Draggable = true  -- Permite que a janela seja arrastada
 
 -- Título
 Title.Parent = Frame
-Title.Size = UDim2.new(1, 0, 0.2, 0)
+Title.Size = UDim2.new(0.8, 0, 0.2, 0)
 Title.Text = "iagocno Script - TP & Créditos"
 Title.TextSize = 15
 Title.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+-- Seta de Minimizar/Expandir
+ArrowIcon.Parent = Frame
+ArrowIcon.Size = UDim2.new(0.2, 0, 0.2, 0)
+ArrowIcon.Position = UDim2.new(0.8, 0, 0, 0)
+ArrowIcon.Text = "▼"  -- Inicialmente para baixo
+ArrowIcon.TextSize = 18
+ArrowIcon.TextColor3 = Color3.fromRGB(255, 255, 255)
+ArrowIcon.BackgroundTransparency = 1
 
 -- Botão de Teleporte
 TeleportButton.Parent = Frame
@@ -70,8 +82,22 @@ local function closeGui()
     ScreenGui:Destroy()
 end
 
+-- Função para alternar a visibilidade do menu
+local function toggleMenu()
+    if Frame.Size == UDim2.new(0, 250, 0, 150) then
+        -- Se o menu estiver expandido, recolher
+        Frame.Size = UDim2.new(0, 250, 0, 50)
+        ArrowIcon.Text = "▲"  -- Muda a seta para cima
+    else
+        -- Se o menu estiver recolhido, expandir
+        Frame.Size = UDim2.new(0, 250, 0, 150)
+        ArrowIcon.Text = "▼"  -- Muda a seta para baixo
+    end
+end
+
 -- Conectando as funções aos botões
 TeleportButton.MouseButton1Click:Connect(teleportToCheckpoints)
 DestroyButton.MouseButton1Click:Connect(closeGui)
+ArrowIcon.MouseButton1Click:Connect(toggleMenu)
 
 print("GUI carregada com sucesso!")
