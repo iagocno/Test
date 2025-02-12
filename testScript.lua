@@ -43,23 +43,25 @@ DestroyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 -- Função para teleportar
 TeleportButton.MouseButton1Click:Connect(function()
     local checkpoints = {
-        game:GetService("Workspace").EventPartFolder:FindFirstChild("0").Checkpoint,
-        game:GetService("Workspace").EventPartFolder:FindFirstChild("1").Checkpoint,
-        game:GetService("Workspace").EventPartFolder:FindFirstChild("2").Checkpoint,
-        game:GetService("Workspace").EventPartFolder:FindFirstChild("3").Checkpoint,
-        game:GetService("Workspace").EventPartFolder:FindFirstChild("4").Checkpoint,
-        game:GetService("Workspace").EventPartFolder:FindFirstChild("5").Checkpoint,
-        game:GetService("Workspace").EventPartFolder:FindFirstChild("6").Checkpoint,
-        game:GetService("Workspace").EventPartFolder:FindFirstChild("7").Checkpoint,
-        game:GetService("Workspace").EventPartFolder:FindFirstChild("8").Checkpoint
+        game:GetService("Workspace").EventPartFolder:FindFirstChild("1"),
+        game:GetService("Workspace").EventPartFolder:FindFirstChild("2"),
+        game:GetService("Workspace").EventPartFolder:FindFirstChild("3"),
+        game:GetService("Workspace").EventPartFolder:FindFirstChild("4"),
+        game:GetService("Workspace").EventPartFolder:FindFirstChild("5")
     }
     
     local player = game.Players.LocalPlayer
-    for _, checkpoint in ipairs(checkpoints) do
-        if checkpoint then
-            player.Character:SetPrimaryPartCFrame(checkpoint.CFrame)
-            wait(1) -- Pequeno delay entre teleportes
+    if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+        for _, checkpoint in ipairs(checkpoints) do
+            if checkpoint and checkpoint:IsA("Part") and checkpoint:FindFirstChild("Checkpoint") then
+                player.Character.HumanoidRootPart.CFrame = checkpoint.Checkpoint.CFrame
+                wait(1) -- Pequeno delay entre teleportes
+            else
+                print("Checkpoint não encontrado ou inválido.")
+            end
         end
+    else
+        print("Jogador ou HumanoidRootPart não encontrado.")
     end
 end)
 
