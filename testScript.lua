@@ -638,7 +638,7 @@ Tab:AddButton({
 })
 
 Tab:AddButton({
-    Name = "💫阿尔宙斯💫",
+    Name = "💫Arceus v3💫",
     Callback = function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/AZYsGithub/chillz-workshop/main/Arceus%20X%20V3"))()
     end
