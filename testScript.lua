@@ -4,7 +4,7 @@ local Window = OrionLib:MakeWindow({Name = "Script de iagocno", HidePremium = fa
 
 local Tab = Window:MakeTab({
     Name = "Home",
-    Icon = "rbxassetid://7734068321",
+    Icon = "rbxassetid://7733960981",
     PremiumOnly = false
 })
 
