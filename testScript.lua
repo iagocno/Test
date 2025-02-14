@@ -37,9 +37,9 @@ local placeId = game.PlaceId
 local executorName = identifyexecutor()
 local Window = lib:CreateWindow(gameName)
 local Home = Window:NewTab("Home")
-local Teste = Window:NewTab("Teste")
 local Naw = Window:NewTab("Auto Farm")
 local Myhusband = Window:NewTab("Misc")
+local Teste = Window:NewTab("Teste")
 
 local Logged = Home:AddSection("Information Account")
 local Discord = Home:AddSection("Discord/Support")
@@ -175,26 +175,6 @@ Codes:AddDropdown("List all Code [Pets]", "Choose the code", codeDisplayList, co
         game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.7.0"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("CodeService"):WaitForChild("RE"):WaitForChild("RequestCodeValidation"):FireServer(unpack(args))
     end
 end)
-
--- TESTE
-local checkpoints = {
-    game:GetService("Workspace").EventPartFolder["16"].Checkpoint,
-    game:GetService("Workspace").EventPartFolder["15"].Checkpoint,
-    game:GetService("Workspace").EventPartFolder["14"].Checkpoint,
-    game:GetService("Workspace").EventPartFolder["13"].Checkpoint,
-    game:GetService("Workspace").EventPartFolder["12"].Checkpoint,
-    game:GetService("Workspace").EventPartFolder["11"].Checkpoint,
-    game:GetService("Workspace").EventPartFolder["10"].Checkpoint,
-    game:GetService("Workspace").EventPartFolder["9"].Checkpoint,
-    game:GetService("Workspace").EventPartFolder["8"].Checkpoint,
-    game:GetService("Workspace").EventPartFolder["7"].Checkpoint,
-    game:GetService("Workspace").EventPartFolder["6"].Checkpoint,
-    game:GetService("Workspace").EventPartFolder["5"].Checkpoint,
-    game:GetService("Workspace").EventPartFolder["4"].Checkpoint,
-    game:GetService("Workspace").EventPartFolder["3"].Checkpoint,
-    game:GetService("Workspace").EventPartFolder["2"].Checkpoint,
-    game:GetService("Workspace").EventPartFolder["1"].Checkpoint
-}
 
 local gems = {
     "PGTSurfz",
