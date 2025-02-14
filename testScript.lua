@@ -1,5 +1,5 @@
 if not game:IsLoaded() then game.Loaded:Wait() end
--- if game.PlaceId == 15536298749 then
+if game.PlaceId == 15536298749 then
 local cloneref = cloneref or function(...) return ... end
 local lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Imalwibest/Imalwibest/refs/heads/main/Fluxus%20Ui.lib"))()
 local VirtualUser = cloneref(game:GetService("VirtualUser"))
