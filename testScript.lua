@@ -56,8 +56,23 @@ Teste:AddButton("Quit UI", "Bye bye",function()
     end)
                 VirtualUser:CaptureController()
                 VirtualUser:ClickButton2(Vector2.new())
-            end)
+            -- end)
     playNotificationSound()
+end)
+
+-- Farm:AddButton("AntiAFK", "Auto Collect With Autonatic",function() 
+--         sendNotification("AntiAfk", "Turned On", 10)
+        
+--                 game:GetService("Players").LocalPlayer.Idled:Connect(function()
+--                     VirtualUser:CaptureController()
+--                     VirtualUser:ClickButton2(Vector2.new())
+--                 end)
+--         playNotificationSound()
+--         end)
+
+
+
+
 
 Logged:AddButton("Game Name : " .. gameName, "Name Game Detected", function() end)
 Logged:AddButton("Place ID Game : " .. placeId, "ID Game", function() end)
@@ -356,6 +371,6 @@ Others:AddButton("Console", "Console",function()
 game:GetService("StarterGui"):SetCore("DevConsoleVisible",true)
 end) 
 Others:AddButton("Credit", ".",function() 
-sendNotification("Alwi", "Made By Love", 10)
+sendNotification("🤓☝️", "Made By iagocno", 10)
 end) 
 end
