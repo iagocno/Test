@@ -59,28 +59,29 @@ local QuitUI = Teste:AddSection("Quit UI") --NOME DA SECTION DENTRO DA TAB
 --             end)
 --     playNotificationSound()
 
--- Função de fechar a UI (Quit UI)
 local function closeGUI()
+    -- Enviar notificação de saída
     sendNotification("Quit UI", "Thx for use", 10)
-    
-    -- Fechar a ScreenGui ou CoreGui dependendo do caso
-    if ScreenGui then
-        ScreenGui:Destroy()
-    elseif CoreGui then
-        CoreGui:Destroy()
+
+    -- Se a janela da Fluxus UI foi criada, destruímos a ScreenGui associada
+    if Window and Window.Parent then
+        Window:Destroy()  -- Isso vai fechar a interface criada pela Fluxus UI
     else
-        -- Em último caso, destruir a janela da biblioteca Fluxus UI
-        Window:Destroy()
+        -- Caso não haja uma janela para destruir, apenas destruir a ScreenGui
+        if ScreenGui then
+            ScreenGui:Destroy()
+        end
     end
-    
-    -- Usar o VirtualUser para simular o clique
+
+    -- Simulando o clique para "sair" do jogo
     VirtualUser:CaptureController()
     VirtualUser:ClickButton2(Vector2.new())
     
+    -- Tocar o som de notificação
     playNotificationSound()
 end
 
--- Adicionando o botão "Quit UI" à tab de Teste
+-- Adicionando o botão de "Quit UI"
 QuitUI:AddButton("Quit UI", "Bye bye", closeGUI)
 
 -- Farm:AddButton("AntiAFK", "Auto Collect With Autonatic",function() 
