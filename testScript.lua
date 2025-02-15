@@ -48,39 +48,41 @@ local Codes = Naw:AddSection("/Code")
 local Others = Myhusband:AddSection("Fps Booster")
 local QuitUI = Teste:AddSection("Quit UI") --NOME DA SECTION DENTRO DA TAB
 
-QuitUI:AddButton("Quit UI", "Bye bye",function() 
+-- QuitUI:AddButton("Quit UI", "Bye bye",function() 
+--     sendNotification("Quit UI", "Thx for use", 10)
+    
+--     quit.MouseButton1Click:Connect(function()
+--         ScreenGui:Destroy()
+--     end)
+--                 VirtualUser:CaptureController()
+--                 VirtualUser:ClickButton2(Vector2.new())
+--             end)
+--     playNotificationSound()
+
+-- Função de fechar a UI (Quit UI)
+local function closeGUI()
     sendNotification("Quit UI", "Thx for use", 10)
     
-    quit.MouseButton1Click:Connect(function()
+    -- Fechar a ScreenGui ou CoreGui dependendo do caso
+    if ScreenGui then
         ScreenGui:Destroy()
-    end)
-                VirtualUser:CaptureController()
-                VirtualUser:ClickButton2(Vector2.new())
-            end)
-    playNotificationSound()
-
-    QuitUI:AddButton("Quit UI", "Bye bye",function() 
-        sendNotification("CoreGui Quit UI", "Thx for use", 10)
-        
-        quit.MouseButton1Click:Connect(function()
-            CoreGui:Destroy()
-        end)
-                    VirtualUser:CaptureController()
-                    VirtualUser:ClickButton2(Vector2.new())
-                end)
-        playNotificationSound()
-
-        QuitUI:AddButton("Quit UI", "Bye bye",function() 
-            sendNotification("Lib Quit UI", "Thx for use", 10)
-            
-            quit.MouseButton1Click:Connect(function()
-                ScreenGui:Destroy()
-            end)
-                        VirtualUser:CaptureController()
-                        VirtualUser:ClickButton2(Vector2.new())
-                    end)
-            playNotificationSound()
+    elseif CoreGui then
+        CoreGui:Destroy()
+    else
+        -- Em último caso, destruir a janela da biblioteca Fluxus UI
+        Window:Destroy()
+    end
     
+    -- Usar o VirtualUser para simular o clique
+    VirtualUser:CaptureController()
+    VirtualUser:ClickButton2(Vector2.new())
+    
+    playNotificationSound()
+end
+
+-- Adicionando o botão "Quit UI" à tab de Teste
+QuitUI:AddButton("Quit UI", "Bye bye", closeGUI)
+
 -- Farm:AddButton("AntiAFK", "Auto Collect With Autonatic",function() 
 --         sendNotification("AntiAfk", "Turned On", 10)
         
