@@ -58,6 +58,28 @@ QuitUI:AddButton("Quit UI", "Bye bye",function()
                 VirtualUser:ClickButton2(Vector2.new())
             end)
     playNotificationSound()
+
+    QuitUI:AddButton("Quit UI", "Bye bye",function() 
+        sendNotification("CoreGui Quit UI", "Thx for use", 10)
+        
+        quit.MouseButton1Click:Connect(function()
+            CoreGui:Destroy()
+        end)
+                    VirtualUser:CaptureController()
+                    VirtualUser:ClickButton2(Vector2.new())
+                end)
+        playNotificationSound()
+
+        QuitUI:AddButton("Quit UI", "Bye bye",function() 
+            sendNotification("Lib Quit UI", "Thx for use", 10)
+            
+            quit.MouseButton1Click:Connect(function()
+                ScreenGui:Destroy()
+            end)
+                        VirtualUser:CaptureController()
+                        VirtualUser:ClickButton2(Vector2.new())
+                    end)
+            playNotificationSound()
     
 -- Farm:AddButton("AntiAFK", "Auto Collect With Autonatic",function() 
 --         sendNotification("AntiAfk", "Turned On", 10)
