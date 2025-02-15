@@ -46,7 +46,18 @@ local Discord = Home:AddSection("Discord/Support")
 local Farm = Naw:AddSection("/Main")
 local Codes = Naw:AddSection("/Code")
 local Others = Myhusband:AddSection("Fps Booster")
+local QuitUI = Teste:AddSection("Quit UI")
 
+Teste:AddButton("Quit UI", "Bye bye",function() 
+    sendNotification("Quit UI", "Thx for use", 10)
+    
+    Teste.MouseButton1Click:Connect(function()
+        ScreenGui:Destroy()
+    end)
+                VirtualUser:CaptureController()
+                VirtualUser:ClickButton2(Vector2.new())
+            end)
+    playNotificationSound()
 
 Logged:AddButton("Game Name : " .. gameName, "Name Game Detected", function() end)
 Logged:AddButton("Place ID Game : " .. placeId, "ID Game", function() end)
@@ -137,8 +148,7 @@ sendNotification("AntiAfk", "Turned On", 10)
             VirtualUser:ClickButton2(Vector2.new())
         end)
 playNotificationSound()
-end) 
-
+end)
 
 local codes = {
     "CSDream",
