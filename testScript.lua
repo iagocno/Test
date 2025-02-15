@@ -59,16 +59,18 @@ local QuitUI = Teste:AddSection("Quit UI") --NOME DA SECTION DENTRO DA TAB
 --             end)
 --     playNotificationSound()
 
-QuitUI:AddButton("Quit UI", "Bye bye",function() 
+QuitUI:AddButton("Quit UI", "Bye bye", function() 
     sendNotification("Quit UI", "Thx for use", 10)
     
-    quit.MouseButton1Click:Connect(function()
-        lib:Destroy()
-    end)
-                VirtualUser:CaptureController()
-                VirtualUser:ClickButton2(Vector2.new())
-            end)
-    playNotificationSound()
+    -- Aqui você deve destruir a janela da biblioteca Fluxus
+    lib:Destroy()  -- Isso deve fechar a UI
+
+    -- Se você quiser simular um clique do mouse, você pode manter isso
+    Virtual:User CaptureController()
+    Virtual:User ClickButton2(Vector2.new())
+    
+    playNotificationSound()  -- Toca o som de notificação
+end)
 
 -- Farm:AddButton("AntiAFK", "Auto Collect With Autonatic",function() 
 --         sendNotification("AntiAfk", "Turned On", 10)
