@@ -51,15 +51,14 @@ local QuitUI = Teste:AddSection("Quit UI")
 Teste:AddButton("Quit UI", "Bye bye",function() 
     sendNotification("Quit UI", "Thx for use", 10)
     
-    Teste.MouseButton1Click:Connect(function()
+    quit.MouseButton1Click:Connect(function()
         ScreenGui:Destroy()
     end)
                 VirtualUser:CaptureController()
                 VirtualUser:ClickButton2(Vector2.new())
-            -- end)
+            end)
     playNotificationSound()
-end)
-
+    
 -- Farm:AddButton("AntiAFK", "Auto Collect With Autonatic",function() 
 --         sendNotification("AntiAfk", "Turned On", 10)
         
