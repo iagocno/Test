@@ -70,17 +70,6 @@ QuitUI:AddButton("Quit UI", "Bye bye",function()
             end)
     playNotificationSound()
 
-    -- Simulando o clique para "sair" do jogo
-    VirtualUser:CaptureController()
-    VirtualUser:ClickButton2(Vector2.new())
-    
-    -- Tocar o som de notificação
-    playNotificationSound()
-end
-
--- Adicionando o botão de "Quit UI"
-QuitUI:AddButton("Quit UI", "Bye bye", closeGUI)
-
 -- Farm:AddButton("AntiAFK", "Auto Collect With Autonatic",function() 
 --         sendNotification("AntiAfk", "Turned On", 10)
         
