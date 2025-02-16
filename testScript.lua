@@ -14,7 +14,7 @@ local function playNotificationSound()
     notificationSound:Play()
 end
 
---TESTE PARA SE MUDOU O COD
+--TESTE PARA SE MUDOU O COD1
 
 local function sendNotification(title, text, duration)
         game.StarterGui:SetCore("SendNotification", {
