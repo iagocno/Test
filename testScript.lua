@@ -14,7 +14,7 @@ local function playNotificationSound()
     notificationSound:Play()
 end
 
---TESTE PARA SE MUDOU O COD1
+-- TESTAE AD WA DA
 
 local function sendNotification(title, text, duration)
         game.StarterGui:SetCore("SendNotification", {
@@ -62,9 +62,9 @@ local QuitUI = Teste:AddSection("Quit UI") --NOME DA SECTION DENTRO DA TAB
 QuitUI:AddButton("Quit UI", "Bye bye",function() 
     sendNotification("Quit UI", "Thx for use", 10)
     
-    quit.MouseButton1Click:Connect(function()
+    -- quit.MouseButton1Click:Connect(function()
         lib:Destroy()
-    end)
+    -- end)
                 VirtualUser:CaptureController()
                 VirtualUser:ClickButton2(Vector2.new())
             end)
