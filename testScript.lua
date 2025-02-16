@@ -14,8 +14,8 @@ local function playNotificationSound()
     notificationSound:Play()
 end
 
--- tesa w adii101 091291919191
 
+    
 local function sendNotification(title, text, duration)
         game.StarterGui:SetCore("SendNotification", {
             Title = title,
